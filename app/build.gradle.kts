@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace = "com.gustavo.isrcalculadoramx2026"
     compileSdk = 34
 
     defaultConfig {
@@ -17,15 +18,24 @@ android {
     buildTypes {
         release {
             minifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -34,6 +44,6 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.google.android.gms:play-services-ads:23.0.0") // AdMob
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0") // Gráfica pastel
+    implementation("com.google.android.gms:play-services-ads:23.0.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v4.0.1")
 }
