@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-APP_HOME=\( (cd " \)(dirname "$0")" && pwd)
+APP_HOME=$(pwd)
 
 CLASSPATH="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
 
