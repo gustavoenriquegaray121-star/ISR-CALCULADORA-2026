@@ -12,24 +12,27 @@ jobs:
       - name: Dar permisos de ejecución a gradlew
         run: chmod +x gradlew
       
-      - name: Instalar herramientas de Android
+      - name: Configurar solo una ruta para el SDK
         run: |
+          # Eliminamos la ruta preinstalada
+          echo "ANDROID_SDK_ROOT=" >> $GITHUB_ENV
+          # Descargamos y configuramos nuestro SDK
           wget https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip
           unzip commandlinetools-linux-10406996_latest.zip -d cmdline-tools
           mkdir -p $HOME/android-sdk/cmdline-tools/latest
           mv cmdline-tools/cmdline-tools/* $HOME/android-sdk/cmdline-tools/latest/
-          # Usamos la ruta completa para sdkmanager
-          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses < /dev/null
-          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-33" "build-tools;33.0.0" "platform-tools"
-          # Configuramos las variables de entorno para los pasos siguientes
+          # Configuramos SOLO ANDROID_HOME
           echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
           echo "PATH=$PATH:$HOME/android-sdk/cmdline-tools/latest/bin:$HOME/android-sdk/platform-tools" >> $GITHUB_ENV
+          # Instalamos componentes con ruta completa
+          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses < /dev/null
+          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-33" "build-tools;33.0.0" "platform-tools"
       
       - name: Instalar dependencias
         run: ./gradlew dependencies --stacktrace
       
       - name: Compilar el proyecto
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --stacktrace -Dorg.gradle.project.android.sdkDir=$HOME/android-sdk
       
       - name: Subir APK como artefacto
         uses: actions/upload-artifact@v4
