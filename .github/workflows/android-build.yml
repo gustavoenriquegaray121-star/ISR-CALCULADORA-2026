@@ -1,17 +1,27 @@
 name: Build Android APK
+
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+      
+      - name: Dar permisos de ejecución a gradlew
+        run: chmod +x gradlew
+      
       - name: Configurar SDK de Android
         uses: android-actions/setup-android@v3
+      
       - name: Instalar dependencias
         run: ./gradlew dependencies
+      
       - name: Compilar el proyecto
         run: ./gradlew assembleDebug
-      - name: Guardar APK
+      
+      - name: Subir APK como artefacto
         uses: actions/upload-artifact@v4
         with:
           name: isr-calculadora-apk
