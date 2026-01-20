@@ -1,11 +1,12 @@
 plugins {
-    id("com.android.application") version "8.1.4"
-    id("org.jetbrains.kotlin.android") version "1.8.22"
+    id("com.android.application") version "8.0.2"
+    id("org.jetbrains.kotlin.android") version "1.8.10"
 }
 
 android {
     namespace = "com.gustavo.isrcalculadoramx2026"
     compileSdk = 33
+    buildToolsVersion = "33.0.0"
 
     defaultConfig {
         applicationId = "com.gustavo.isrcalculadoramx2026"
