@@ -1,16 +1,16 @@
 plugins {
-    id("com.android.application") version "8.2.2"
-    id("org.jetbrains.kotlin.android") version "1.9.22"
+    id("com.android.application") version "8.1.4"
+    id("org.jetbrains.kotlin.android") version "1.8.22"
 }
 
 android {
     namespace = "com.gustavo.isrcalculadoramx2026"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.gustavo.isrcalculadoramx2026"
         minSdk = 23
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
     }
@@ -40,11 +40,9 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    // QUITAMOS LOS ANUNCIOS POR AHORA PARA QUE COMPILE
-    // implementation("com.google.android.gms:play-services-ads:23.0.0")
     implementation("com.github.PhilJay:MPAndroidChart:v4.0.1")
 }
