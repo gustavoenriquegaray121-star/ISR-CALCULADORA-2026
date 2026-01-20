@@ -5,15 +5,13 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") }
     }
 }
 
-rootProject.name = "ISR-CALCULADORA-2026"
+rootProject.name = "ISR-Calculadora-MX-2026"
 include(":app")
