@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.application") version "8.0.2"
-    id("org.jetbrains.kotlin.android") version "1.8.10"
+    id("com.android.application") version "7.4.2"
+    id("org.jetbrains.kotlin.android") version "1.7.20"
 }
 
 android {
@@ -41,9 +41,10 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.core:core-ktx:1.8.0")
+    implementation("androidx.appcompat:appcompat:1.5.1")
+    implementation("com.google.android.material:material:1.7.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.github.PhilJay:MPAndroidChart:v4.0.1")
+    // Usamos una versión más estable de MPAndroidChart
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
