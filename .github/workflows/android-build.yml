@@ -12,27 +12,28 @@ jobs:
       - name: Dar permisos de ejecución a gradlew
         run: chmod +x gradlew
       
-      - name: Configurar solo una ruta para el SDK
+      - name: Configurar SDK sin rutas duplicadas
         run: |
-          # Eliminamos la ruta preinstalada
-          echo "ANDROID_SDK_ROOT=" >> $GITHUB_ENV
-          # Descargamos y configuramos nuestro SDK
+          # Eliminamos cualquier variable de SDK existente
+          unset ANDROID_SDK_ROOT
+          unset ANDROID_HOME
+          # Descargamos herramientas oficiales
           wget https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip
           unzip commandlinetools-linux-10406996_latest.zip -d cmdline-tools
           mkdir -p $HOME/android-sdk/cmdline-tools/latest
           mv cmdline-tools/cmdline-tools/* $HOME/android-sdk/cmdline-tools/latest/
           # Configuramos SOLO ANDROID_HOME
-          echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
-          echo "PATH=$PATH:$HOME/android-sdk/cmdline-tools/latest/bin:$HOME/android-sdk/platform-tools" >> $GITHUB_ENV
-          # Instalamos componentes con ruta completa
-          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses < /dev/null
-          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-33" "build-tools;33.0.0" "platform-tools"
+          export ANDROID_HOME=$HOME/android-sdk
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+          # Instalamos componentes
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses < /dev/null
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-33" "build-tools;33.0.0" "platform-tools"
+          # Guardamos variables para pasos siguientes
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "PATH=$PATH" >> $GITHUB_ENV
       
-      - name: Instalar dependencias
-        run: ./gradlew dependencies --stacktrace
-      
-      - name: Compilar el proyecto
-        run: ./gradlew assembleDebug --stacktrace -Dorg.gradle.project.android.sdkDir=$HOME/android-sdk
+      - name: Compilar el proyecto sin rutas conflictivas
+        run: ./gradlew assembleDebug --stacktrace -Dandroid.sdk.dir=$ANDROID_HOME
       
       - name: Subir APK como artefacto
         uses: actions/upload-artifact@v4
