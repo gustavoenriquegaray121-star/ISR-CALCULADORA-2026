@@ -12,20 +12,18 @@ jobs:
       - name: Dar permisos de ejecución a gradlew
         run: chmod +x gradlew
       
-      - name: Usar SDK preinstalado y añadir componentes faltantes
+      - name: Configurar SDK de Android
         run: |
-          # Usamos la ruta preinstalada que el sistema reconoce
           export ANDROID_SDK_ROOT=/usr/local/lib/android/sdk
           export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools
-          # Aceptamos licencias e instalamos componentes que necesitamos
           yes | sdkmanager --licenses
           sdkmanager "platforms;android-33" "build-tools;33.0.0"
       
-      - name: Compilar el proyecto con la ruta correcta
-        run: ./gradlew assembleDebug --stacktrace -Dandroid.sdk.dir=$ANDROID_SDK_ROOT
+      - name: Compilar proyecto Android
+        run: ./gradlew assembleDebug --stacktrace
       
       - name: Subir APK como artefacto
         uses: actions/upload-artifact@v4
         with:
-          name: isr-calculadora-apk
+          name: calculadora-isr-apk
           path: app/build/outputs/apk/debug/app-debug.apk
