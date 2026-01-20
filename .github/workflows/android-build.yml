@@ -12,8 +12,12 @@ jobs:
       - name: Dar permisos de ejecución a gradlew
         run: chmod +x gradlew
       
-      - name: Configurar SDK de Android
+      - name: Configurar SDK de Android con versión específica
         uses: android-actions/setup-android@v3
+        with:
+          sdk-version: "33"
+          build-tools-version: "33.0.0"
+          cmdline-tools-version: "8.0"
       
       - name: Instalar dependencias
         run: ./gradlew dependencies --stacktrace
