@@ -16,12 +16,14 @@ jobs:
         run: |
           wget https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip
           unzip commandlinetools-linux-10406996_latest.zip -d cmdline-tools
-          mkdir -p $HOME/android-sdk/cmdline-tools
-          mv cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
+          mkdir -p $HOME/android-sdk/cmdline-tools/latest
+          mv cmdline-tools/cmdline-tools/* $HOME/android-sdk/cmdline-tools/latest/
+          # Usamos la ruta completa para sdkmanager
+          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses < /dev/null
+          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-33" "build-tools;33.0.0" "platform-tools"
+          # Configuramos las variables de entorno para los pasos siguientes
           echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
           echo "PATH=$PATH:$HOME/android-sdk/cmdline-tools/latest/bin:$HOME/android-sdk/platform-tools" >> $GITHUB_ENV
-          yes | sdkmanager --licenses
-          sdkmanager "platforms;android-33" "build-tools;33.0.0" "platform-tools"
       
       - name: Instalar dependencias
         run: ./gradlew dependencies --stacktrace
